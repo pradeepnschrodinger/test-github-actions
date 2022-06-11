@@ -10,8 +10,7 @@ class Counter extends React.Component {
     document.title = `You clicked ${this.state.count} times`;
   }
   componentDidUpdate() {
-    // NOTE (pradeep): I'm removing this line temporarily to make our test cases fail
-    // document.title = `You clicked ${this.state.count} times`;
+    document.title = `You clicked ${this.state.count} times`;
   }
   handleClick() {
     this.setState(state => ({
