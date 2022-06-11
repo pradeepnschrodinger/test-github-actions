@@ -1,4 +1,3 @@
-var ReactTestUtils = require('react-dom/test-utils');
 const React = require('react');
 const ReactDOM = require('react-dom/client');
 const { act } = require('react-dom/test-utils');
