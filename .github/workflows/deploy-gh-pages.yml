@@ -23,8 +23,8 @@ jobs:
         node-version: 16
         cache: 'npm'
 
-    - run: npm ci
-    - run: |
-        git config --global user.name 'Niranjan Pradeep'
-        git config --global user.email 'pradeepnschrodinger@users.noreply.github.com'
-    - run: npm run deploy
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
