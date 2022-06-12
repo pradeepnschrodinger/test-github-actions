@@ -19,6 +19,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+      - name: Dump Release Tag
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: echo $RELEASE_TAG
 
   check:
     runs-on: ubuntu-latest
