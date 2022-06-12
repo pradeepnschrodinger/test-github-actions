@@ -27,7 +27,7 @@ jobs:
     - name: Check Release
       id: check-release
       run: |
-        if [[ ${{ github.event.ref }} =~ ^v1\.[0-9]+\.[0-9]+$ ]]; then
+        if [[ ${{ github.event.release.tag_name }} =~ ^v1\.[0-9]+\.[0-9]+$ ]]; then
           echo ::set-output name=match::true
         fi
         
