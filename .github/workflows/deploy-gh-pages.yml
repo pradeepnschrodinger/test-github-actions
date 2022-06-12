@@ -23,6 +23,5 @@ jobs:
         cache: 'npm'
 
     - run: npm ci
+    - run: gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
     - run: npm run deploy
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
