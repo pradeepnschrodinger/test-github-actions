@@ -5,15 +5,41 @@
 name: Deploy to gh-pages
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  release:
+    types: [published]
 
 jobs:
-  build:
-
+  debug:
+    name: Debug
     runs-on: ubuntu-latest
+    steps:
+      - name: Dump env
+        run: env | sort
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check Release
+      id: check-release
+      run: |
+        if [[ ${{ github.event.ref }} =~ ^v1\.[0-9]+\.[0-9]+$ ]]; then
+          echo ::set-output name=match::true
+        fi
+        
+    - name: Build
+      if: steps.check-release.outputs.match == 'true'
+      run: |
+        echo "Tag is a match"
+
+  build:
+    needs: check
+    runs-on: ubuntu-latest
+    if: needs.check.steps.check-release.outputs.match == 'true'
 
     steps:
     - uses: actions/checkout@v3
