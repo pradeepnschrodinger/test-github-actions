@@ -30,7 +30,7 @@ jobs:
 
   deploy:
     name: Deploy gh-pages!
-    needs: check
+    needs: check-release
     runs-on: ubuntu-latest
     # skip deploying to gh-pages if release is not "stable"
     if: needs.check-release.outputs.is_stable == 'true'
