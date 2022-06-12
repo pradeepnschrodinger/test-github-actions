@@ -1,11 +1,11 @@
 import React from "react";
-
+import pkg from '../package.json'
 class Counter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {count: 0};
     this.handleClick = this.handleClick.bind(this);
-    this.version = 'v1.0.0';
+    this.version = pkg.version;
   }
   componentDidMount() {
     document.title = `You clicked ${this.state.count} times`;
