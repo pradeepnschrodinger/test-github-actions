@@ -23,11 +23,11 @@ jobs:
         node-version: 16
         cache: 'npm'
 
-    - run: npm ci
-    - run: npm run build
+    - run: npm ci # do a clean install of all of our dependencies
+    - run: npm run build # check if our library can be built without issues
 
-    - name: Deploy
+    - name: Deploy to gh-pages # publish our site to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
+        github_token: ${{ secrets.GITHUB_TOKEN }} # authenticate the action to our workflow
+        publish_dir: ./build # this directory will be copied over to gh-pages
