@@ -24,3 +24,5 @@ jobs:
 
     - run: npm ci
     - run: npm run deploy
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
