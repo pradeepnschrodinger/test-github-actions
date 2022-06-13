@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     
     # skip deploying to gh-pages if release is not "stable"
-    if: needs.check-release.outputs.is_stable == 'true'
+    if: ${{ needs.check-release.outputs.is_stable == 'true' }}
 
     steps:
     - uses: actions/checkout@v3
