@@ -16,7 +16,7 @@ jobs:
     name: Check if release is stable
     runs-on: ubuntu-latest
     outputs: 
-      match: $ {{ steps.check-release.outputs.match }}
+      is_stable: $ {{ steps.check-release.outputs.is_stable }}
 
     steps:
     - name: Check if release is stable
