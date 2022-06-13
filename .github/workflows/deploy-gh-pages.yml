@@ -5,15 +5,44 @@
 name: Deploy to gh-pages
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  release:
+    types: [published]
 
 jobs:
-  build:
-
+  # NOTE (pradeep): This job checks if the published release is a "stable release".
+  # eg: v1.0.10 is stable, but not v1.0.10-experimental-foo
+  # I'm also limiting this workflow to just the "v1" until we carve out separate gh-pages for each major release.
+  check-release:
+    name: Check if release is stable
     runs-on: ubuntu-latest
+
+    # map step output to job output
+    outputs: 
+      is_stable: ${{ steps.check-release-stable.outputs.is_stable }}
+
+    steps:
+    - name: Check if release is stable
+      id: check-release-stable
+      env:
+        RELEASE_TAG: ${{ github.event.release.tag_name }} # The tag name. eg: v1.0.10
+      run: |
+        echo "RELEASE_TAG is: " $RELEASE_TAG
+        if [[ $RELEASE_TAG =~ ^v1\.[0-9]+\.[0-9]+$ ]]; 
+        then
+          echo "This is a stable release!"
+          echo "::set-output name=is_stable::true"
+        else
+          echo "This is not a stable release!"
+          echo "::set-output name=is_stable::false"
+        fi
+
+  deploy:
+    name: Deploy gh-pages!
+    needs: check-release
+    runs-on: ubuntu-latest
+    
+    # skip deploying to gh-pages if release is not "stable"
+    if: ${{ needs.check-release.outputs.is_stable == 'true' }}
 
     steps:
     - uses: actions/checkout@v3
