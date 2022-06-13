@@ -18,7 +18,7 @@ jobs:
 
     # map step output to job output
     outputs: 
-      is_stable: $ {{ steps.check-release-stable.outputs.is_stable }}
+      is_stable: ${{ steps.check-release-stable.outputs.is_stable }}
 
     steps:
     - name: Check if release is stable
